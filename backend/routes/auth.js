@@ -1,24 +1,25 @@
 const router = require("express").Router();
 const passport = require("passport");
-const password = require('passport')
+const password = require('passport');
 
 
 router.get("/login/success", (req, res) => {
-
+    console.log("Login success route hit");
     if (req.user) {
+        console.log("User data:", req.user);
         res.status(200).json({
             error: false,
             message: "Logged in successfully",
             user: req.user,
-        })
-
+        });
     } else {
         res.status(403).json({
             error: true,
-            message: "Not Authorized"
-        })
+            message: "Not Authorized",
+        });
     }
-})
+});
+
 
 
 router.get("/login/failed", (req, res) => {
