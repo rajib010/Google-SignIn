@@ -4,7 +4,7 @@ function Login() {
         const googleAuth = () => {
             const url = `${import.meta.env.VITE_API_URL}/auth/google/callback`;
             console.log(url);  
-            window.open(url, "self");
+            window.open(url,'self')
         }
     
 

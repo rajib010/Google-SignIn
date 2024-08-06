@@ -13,14 +13,15 @@ function App() {
       console.log("hi there");
       const url = `${import.meta.env.VITE_API_URL}/auth/login/success`;
       console.log(import.meta.env.VITE_API_URL);
-      
-      
       const { data } = await axios.get(url, { withCredentials: true })
-      console.log(data);
+      console.log("User data fetched: ",data);
       
-      setUser(data.user.json)
+      setUser(data.user);
+      // console.log(user.userName);
+      
+      
     } catch (error) {
-      console.log(error);
+      console.log("Error fetching data",error);
 
     }
   }
