@@ -1,10 +1,11 @@
 const router = require("express").Router();
 const passport = require("passport");
-const password = require('passport');
-
+require("../passport.js");
 
 router.get("/login/success", (req, res) => {
     console.log("Login success route hit");
+    console.log("req.user:", req.user);
+
     if (req.user) {
         console.log("User data:", req.user);
         res.status(200).json({
@@ -20,28 +21,30 @@ router.get("/login/success", (req, res) => {
     }
 });
 
-
-
 router.get("/login/failed", (req, res) => {
     res.status(401).json({
         error: true,
         message: "Login failure",
     });
-})
+});
 
 router.get(
     "/google/callback",
-    password.authenticate("google", {
+    passport.authenticate("google", {
         successRedirect: process.env.CLIENT_URL,
         failureRedirect: "/login/failed",
     })
-)
+);
 
 router.get("/google", passport.authenticate("google", ["profile", "email"]));
 
 router.get("/logout", (req, res) => {
-    req.logOut();
-    res.redirect(process.env.CLIENT_URL)
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect(process.env.CLIENT_URL);
+    });
 });
 
-module.exports = router
+module.exports = router;
