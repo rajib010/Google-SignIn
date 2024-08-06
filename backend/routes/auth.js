@@ -31,7 +31,7 @@ router.get("/login/failed", (req, res) => {
 router.get(
     "/google/callback",
     passport.authenticate("google", {
-        successRedirect: process.env.CLIENT_URL,
+        successRedirect: process.env.SUCCESS_URL,
         failureRedirect: "/login/failed",
     })
 );
@@ -39,9 +39,12 @@ router.get(
 router.get("/google", passport.authenticate("google", ["profile", "email"]));
 
 router.get("/logout", (req, res) => {
+    console.log('Logging out.....');
+    
     req.logout((err) => {
         if (err) {
             return next(err);
+            
         }
         res.redirect(process.env.CLIENT_URL);
     });
